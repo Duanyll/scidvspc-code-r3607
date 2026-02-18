@@ -1,0 +1,46 @@
+# Build artifacts
+*.o
+*.a
+*.so
+*.dll
+.depend
+
+# Generated executables
+/pgnscid
+/tkscid
+/tcscid
+/scmerge
+/scidlet
+/scidt
+/scql
+/scid
+/sc_remote
+/scidpgn
+/sc_addmove
+/sc_epgn
+/sc_spell
+/sc_eco
+/sc_import
+/sc_tree
+/sc_maketree
+/spliteco
+/tbstats
+/wmtest
+/pgnfix
+/eco2pgn
+/twic2pgn
+
+# Engine binaries
+engines/phalanx/phalanx
+engines/phalanx/.o/
+engines/toga/src/fruit
+engines/toga/src/a.out
+
+# Generated files
+/Makefile
+/Makefile.bak
+tcl/sharedir.tcl
+
+# macOS
+.DS_Store
+dist/

@@ -73,7 +73,7 @@ LDFLAGS = -F$(TCL_DIR)
 #       can reduce the size of the Scid program by only specifying
 #       the languages you want supported.
 
-LANGUAGES = tcl/lang/czech.tcl tcl/lang/deutsch.tcl tcl/lang/finnish.tcl tcl/lang/francais.tcl tcl/lang/greek.tcl tcl/lang/hungary.tcl tcl/lang/italian.tcl tcl/lang/norsk.tcl tcl/lang/polish.tcl tcl/lang/portbr.tcl tcl/lang/port.tcl tcl/lang/russian.tcl tcl/lang/nederlan.tcl tcl/lang/spanish.tcl tcl/lang/serbian.tcl tcl/lang/swedish.tcl tcl/lang/turkish.tcl
+LANGUAGES = tcl/lang/chinese.tcl tcl/lang/czech.tcl tcl/lang/deutsch.tcl tcl/lang/finnish.tcl tcl/lang/francais.tcl tcl/lang/greek.tcl tcl/lang/hungary.tcl tcl/lang/italian.tcl tcl/lang/norsk.tcl tcl/lang/polish.tcl tcl/lang/portbr.tcl tcl/lang/port.tcl tcl/lang/russian.tcl tcl/lang/nederlan.tcl tcl/lang/spanish.tcl tcl/lang/serbian.tcl tcl/lang/swedish.tcl tcl/lang/turkish.tcl
 
 
 ############################################################

@@ -137,8 +137,7 @@ menuText Z ToolsComp "电脑锦标赛(C)" 6 {国际象棋引擎锦标赛}
 menuText Z ToolsTacticalGame "电脑对弈 - Phalanx(C)"  15 {进行带战术的对局}
 menuText Z ToolsSeriousGame "电脑对弈 - UCI 引擎(U)"  14 {与 UCI 引擎对弈}
 menuText Z ToolsTrainTactics "杀棋谜题（N 步杀）(M)"  11 {解答“N 步杀”谜题}
-# ====== TODO To be translated ======
-menuText Z ToolsTrainOpening "Opening Trainer" 0 {Rep training}
+menuText Z ToolsTrainOpening "开局训练器(O)" 0 {开局库训练}
 menuText Z ToolsTrainCalvar "变着计算训练(C)"  7 {Stoyko 训练}
 menuText Z ToolsTrainFindBestMove "寻找最佳着法(F)"  7 {寻找最佳着法}
 menuText Z ToolsTrainFics "互联网对弈（FICS）(I)"  12 {在 freechess.org 上对弈}
@@ -1445,8 +1444,7 @@ translate Z NumberOfDubiousMovesPlayed {疑问着法次数}
 translate Z NumberOfTimesPositionEncountered {局面出现次数}
 translate Z PlayerBestMove  {仅允许最佳着法}
 translate Z OpponentBestMove {对手走最佳着法}
-# ====== TODO To be translated ======
-translate Z RemoveGames {Don't repeat a game}
+translate Z RemoveGames {不重复对局}
 translate Z OnlyFlaggedLines {仅标记路线}
 translate Z resetStats {重置统计数据}
 translate Z Movesloaded {已加载着法}
@@ -1454,24 +1452,15 @@ translate Z PositionsNotPlayed {未练习局面}
 translate Z PositionsPlayed {已练习局面}
 translate Z Success {成功}
 translate Z DubiousMoves {疑问着法}
-# ====== TODO To be translated ======
-translate Z NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
-# ====== TODO To be translated ======
-translate Z Repertoiretrainingconfiguration {Opening Trainer Configuration}
-# ====== TODO To be translated ======
-translate Z Loadingrepertoire {Loading repertoire}
-# ====== TODO To be translated ======
-translate Z Repertoirenotfound {Repertoire not found}
-# ====== TODO To be translated ======
-translate Z NoRepertoireFound {No Repertoire Database found}
-# ====== TODO To be translated ======
-translate Z Movenotinrepertoire {Move not in repertoire}
-# ====== TODO To be translated ======
-translate Z PositionsInRepertoire {Positions in Repertoire}
-# ====== TODO To be translated ======
-translate Z OutOfRepertoire {Out of Repertoire}
-# ====== TODO To be translated ======
-translate Z NextGame {Next Game}
+translate Z NumberOfMovesPlayedNotInRepertoire {不在开局库中的着法数}
+translate Z Repertoiretrainingconfiguration {开局训练器设置}
+translate Z Loadingrepertoire {正在加载开局库}
+translate Z Repertoirenotfound {未找到开局库}
+translate Z NoRepertoireFound {未找到开局库数据库}
+translate Z Movenotinrepertoire {着法不在开局库中}
+translate Z PositionsInRepertoire {开局库中的局面}
+translate Z OutOfRepertoire {超出开局库范围}
+translate Z NextGame {下一局}
 translate Z ConfigureTactics {选择习题}
 translate Z ResetScores {重置得分}
 translate Z LoadingBase {正在加载数据库}
