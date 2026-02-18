@@ -6,7 +6,15 @@ namespace eval ::config {}
 if {$windowsOS} {
   set scidShareDir $scidExeDir
 } elseif {$macOS} {
-  set scidShareDir [file normalize [file join $scidExeDir "../Resources"]]
+  set appResourcesDir [file normalize [file join $scidExeDir "../Resources"]]
+  if {[file exists [file join $appResourcesDir "data/scid.eco"]] \
+      || [file isdirectory [file join $appResourcesDir lang]] \
+      || [file isdirectory [file join $appResourcesDir tcl lang]]} {
+    set scidShareDir $appResourcesDir
+  } else {
+    # Support running ./scid directly from the source/build directory on macOS.
+    set scidShareDir $scidExeDir
+  }
 } else {
   if {![info exists scidShareDir]} {
     set scidShareDir [file normalize [file join $scidExeDir "../share/scid"]]
@@ -123,4 +131,3 @@ if {$unixOS && !$macOS} {
 }
 
 ### end of config.tcl
-

@@ -80,6 +80,81 @@ proc isDarwin {} {
   return [string match Darwin* $::tcl_platform(os)]
 }
 
+# findTclTkPathsHomebrew:
+#    On macOS, prefer Homebrew tcl-tk@8 over system frameworks.
+
+proc findTclTkPathsHomebrew {} {
+    global var
+
+    # Respect explicit user overrides.
+    foreach name {TCL_INCLUDE TCL_LIBRARY TK_LIBRARY} {
+        if {[info exists var($name)]} {
+            return 0
+        }
+    }
+
+    set prefixes {}
+    if {[info exists ::env(HOMEBREW_PREFIX)]} {
+        lappend prefixes [file join $::env(HOMEBREW_PREFIX) opt tcl-tk@8]
+    }
+    foreach p {/opt/homebrew/opt/tcl-tk@8 /usr/local/opt/tcl-tk@8} {
+        if {[lsearch -exact $prefixes $p] < 0} {
+            lappend prefixes $p
+        }
+    }
+    if {![catch {exec brew --prefix tcl-tk@8} brewPrefix]} {
+        set brewPrefix [string trim $brewPrefix]
+        if {$brewPrefix != "" && [lsearch -exact $prefixes $brewPrefix] < 0} {
+            lappend prefixes $brewPrefix
+        }
+    }
+
+    foreach prefix $prefixes {
+        if {! [file isdirectory $prefix]} {
+            continue
+        }
+
+        set includeDir [file join $prefix include]
+        set includeRoot $includeDir
+        set libDir [file join $prefix lib]
+        if {[file exists [file join $includeDir tcl.h]] && [file exists [file join $includeDir tk.h]]} {
+            set includeRoot $includeDir
+        } elseif {[file exists [file join $includeDir tcl-tk tcl.h]] && [file exists [file join $includeDir tcl-tk tk.h]]} {
+            set includeRoot [file join $includeDir tcl-tk]
+        } else {
+            continue
+        }
+        if {! [file isdirectory $libDir]} {
+            continue
+        }
+
+        set versions {}
+        foreach lib [glob -nocomplain -tails -directory $libDir libtcl8*.dylib] {
+            if {[regexp {^libtcl(8\.[0-9]+)\.dylib$} $lib -> v] \
+                && [file exists [file join $libDir "libtk$v.dylib"]]} {
+                lappend versions $v
+            }
+        }
+        if {! [llength $versions]} {
+            continue
+        }
+
+        set version [lindex [lsort -decreasing -dictionary -unique $versions] 0]
+        set includeFlags "-I$includeRoot"
+        if {$includeRoot != $includeDir} {
+            append includeFlags " -I$includeDir"
+        }
+
+        set var(TCL_VERSION) $version
+        set var(TCL_INCLUDE) $includeFlags
+        set var(TCL_LIBRARY) "-L$libDir -ltcl$version"
+        set var(TK_LIBRARY) "-L$libDir -ltcl$version -ltk$version"
+        puts "    Location of Homebrew tcl-tk@8: $prefix"
+        return 1
+    }
+    return 0
+}
+
 # findTclTkPathsDarwin:
 #    Set-up paths using frameworks. Since frameworks are quite
 #    different, the UNIX search logic is not sharable:
@@ -137,10 +212,10 @@ proc findTclTkPaths {} {
     set success 1
     array set opt {}
 
-    ### Look for frameworks *before* any system inslaled wish.
-    # The problem is, snow leopard ships with a broken Wish (8.5.7) and users
-    # upgrading manually must replace the framework, not just install a new
-    # wish on the Unix tree. (Is this correct ?)
+    ### On Darwin, prefer Homebrew tcl-tk@8 first, then frameworks.
+    if {[isDarwin] && [findTclTkPathsHomebrew]} {
+        return 1
+    }
 
     if {[isDarwin] && [findTclTkPathsAqua]} {
         # Frameworks found, stop looking for paths:
@@ -440,7 +515,7 @@ proc writeMakefile {{type ""}} {
     global var defaultVar
 
     set Makefile_conf "Makefile.conf"
-    if {[isDarwin] && [findTclTkPathsAqua]} {
+    if {[isDarwin]} {
         set Makefile_conf "Makefile.conf.darwin"
     }
     set default 0

@@ -39,6 +39,8 @@ engines/toga/src/a.out
 # Generated files
 /Makefile
 /Makefile.bak
+/scid.orig
+/scid.rej
 tcl/sharedir.tcl
 
 # macOS

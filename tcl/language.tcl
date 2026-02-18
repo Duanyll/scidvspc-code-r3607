@@ -96,6 +96,18 @@ array set langTable {
   T {turkish  Turkish    0 utf-8     tr}
 }
 
+proc languageFilesDir {} {
+  set candidates [list \
+    [file nativename [file join $::scidShareDir lang]] \
+    [file nativename [file join $::scidShareDir tcl lang]]]
+  foreach dir $candidates {
+    if {[file isdirectory $dir]} {
+      return $dir
+    }
+  }
+  return [lindex $candidates 0]
+}
+
 proc initLanguageMenus {} {
   global langEncoding languages langTable
 
@@ -104,7 +116,7 @@ proc initLanguageMenus {} {
     -underline 0 -variable language -value E -command setLanguage
   set langEncoding(E) utf-8
 
-  set dir [file nativename [file join $::scidShareDir lang]]
+  set dir [languageFilesDir]
 
   set l {}
   foreach {m n} [array get langTable] {
@@ -196,7 +208,7 @@ proc setLanguage {{lang ""}} {
     ### (langEncoding doubles as a way to know if we have inited language yet)
     if {![info exists langEncoding($lang)]} {
       set langEncoding($lang) [lindex $langTable($lang) 3]
-      set filename [file nativename [file join $::scidShareDir "lang/[lindex $langTable($lang) 0].tcl"]]
+      set filename [file nativename [file join [languageFilesDir] "[lindex $langTable($lang) 0].tcl"]]
       if {$langEncoding($lang) == "utf-8"} {
 	source -encoding utf-8 $filename
       } else {
@@ -278,4 +290,3 @@ proc setLanguageTemp { lang } {
 }
 
 ### End of file: lang.tcl
-
