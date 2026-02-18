@@ -39,10 +39,12 @@ engines/toga/src/a.out
 # Generated files
 /Makefile
 /Makefile.bak
-/scid.orig
-/scid.rej
 tcl/sharedir.tcl
 
 # macOS
 .DS_Store
 dist/
+/scid.orig
+/scid.rej
+/scid.rej.orig
+/ScidvsMac.dmg
